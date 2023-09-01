@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # Author: Leonel Figueiredo de Alencar
-# Last update: August 31, 2023
+# Last update: September 1, 2023
 
 
 class Category:
@@ -80,21 +80,21 @@ class SemanticDomain:
 		return translation.get(self.label,self.label)
 		
 class Ethnonym(SemanticDomain):
-	"""A class to represent the ethnonyms.
+	"""A class to represent ethnonyms.
 		
 		"""
 	def __init__(self):
 		super().__init__('ethnon')
 		
 class Toponym(SemanticDomain):
-	"""A class to represent the ethnonyms.
+	"""A class to represent toponyms.
 		
 		"""
 	def __init__(self):
 		super().__init__('topon')
 
 class Astronomical(SemanticDomain):
-	"""A class to represent the ethnonyms.
+	"""A class to represent astronomical terms.
 		
 		"""
 	def __init__(self):
@@ -256,6 +256,7 @@ class SourceList:
 			self.sourcelist.append(Source(author,page))
 
 # TODO: cat (Category) (see above) instead of pos (str)
+
 class Sense:
 	"""A class to represent a sense of a lemma.
 	
@@ -303,11 +304,30 @@ class Example:
 		return f"{self.yrl}{source} - {self.por}"
 
 class SenseExample:
+	"""A class to represent an example of the usage of a sense.
+	
+	Args:
+		example (Example): An instance of the Example class.
+		anchorspan (list): List of AnchorSpan instances. 
+	
+	"""
 	def __init__(self, example,anchorspan):
 		self.example = example
 		self.anchorspan = anchorspan
 		
 
+class AnchorSpan:
+	"""A class to represent the occurrences of a word in an example.
+	
+	Args:
+		start (int): The start index in the example string.
+		end (end): The end index in the example string.
+	
+	"""
+	def __init__(self, start,end):
+		self.start = start
+		self.end = end
+	
 # TODO: use 'ortho' instead of 'form' (likewise 'phon' if phonemic representation is adopted)
 class RelationalPrefix():
 	def __init__(self,form,hypoth=False,hist=False):
