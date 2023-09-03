@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # Author: Leonel Figueiredo de Alencar
-# Last update: September 1, 2023
+# Last update: September 2, 2023
 
 
 class Category:
@@ -264,7 +264,7 @@ class Sense:
 		cat (Category): Categorial information.
 		definition (str): Sense definition.
 		num (int): Sequence number of the sense.
-		examples (list): List of sense examples.
+		examples (list): List of SenseExamples instances.
 		usage (Usage): Sense usage. 
 		sourcelist (Sourcelist): List of bibliographical sources.
 		usage_note (str): Explanation about the use of the sense.
@@ -308,16 +308,52 @@ class SenseExample:
 	
 	Args:
 		example (Example): An instance of the Example class.
-		anchorspan (list): List of AnchorSpan instances. 
+		anchorspans (list): List of AnchorSpan instances. 
 	
 	"""
-	def __init__(self, example,anchorspan):
+	def __init__(self, example,formlist):
 		self.example = example
-		self.anchorspan = anchorspan
+		#self.anchorspans = anchorspans
+		self.anchorspans = None
+		self.fromformlist(formlist)
+	# TODO: Is there a better way to do this?
+	
+	def findall(self,substring):
+		"""Return start and end indexes of all occurrences of substring in string.
 		
+		"""
+		string=self.example.yrl.lower()
+		substring=substring.lower()
+		span=len(substring)
+		length=len(string)-span
+		i=0
+		indexes=[]
+		while(i<=length):
+			start=i
+			end=i+span
+			if string[start:end]==substring:
+				indexes.append((start,end))
+				i=end
+			i+=1
+		return indexes
+	
+	def spans(self,indexes):
+		"""Return a list of AnchorSpan instances for each (start,end) tuple from a list.
+		
+		Args:
+			indexes (list): List of (start,end) tuples, where start and end are positive integers.
+		
+		"""
+		self.anchorspans=[AnchorSpan(start, end) for start,end in indexes]
+		
+	def fromformlist(self,formlist):
+		indexes=[]
+		for form in formlist:
+			indexes.extend(self.findall(form))
+		self.spans(indexes)
 
 class AnchorSpan:
-	"""A class to represent the occurrences of a word in an example.
+	"""A class to represent an occurrence of a word in an example.
 	
 	Args:
 		start (int): The start index in the example string.
