@@ -308,7 +308,7 @@ class SenseExample:
 	
 	Args:
 		example (Example): An instance of the Example class.
-		anchorspans (list): List of AnchorSpan instances. 
+		formlist (list): List of forms. 
 	
 	"""
 	def __init__(self, example,formlist):
