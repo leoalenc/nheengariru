@@ -20,7 +20,7 @@ example6=Example("Itakamutí pupé ne yasukawa, pitangé puranga ité.", baena, 
 def ExampleEntry():
 	lemma=Lemma("teité")
 	taite = Variant("taité")
-	tete = Variant("teté", True)
+	tete = Variant("teté",num=1,hist=True)
 	# TODO: automatically extract the lemma forms
 	# TODO: formlist is actually more complicated to obtain because of inflection (relational prefixes, conjugation, etc.) and derivation
 	formlist=['teité','taité','teté']
